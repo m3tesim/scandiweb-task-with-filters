@@ -1,0 +1,716 @@
+.App {
+  justify-content: center;
+  display: flex;
+  align-content: center;
+  flex-direction: column;
+  font-size: calc(5px + 2vmin);
+  font-family: Raleway;
+  font-style: normal;
+}
+
+.app-container {
+  max-width: 90%;
+  padding: 5em 4% 5em 4%;
+  box-sizing: border-box;
+}
+
+.App-header {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+}
+.categories-container {
+  display: inline-block;
+}
+.nav-container {
+  width: 100%;
+  min-height: 100%;
+  margin-bottom: 50px;
+  background-color: #ffffff;
+  padding: 1em;
+
+}
+
+.navBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  font-size: calc(5px + 2vmin);
+  font-family: Raleway;
+}
+.leftnavBar {
+  display: flex;
+}
+
+.navBar div li {
+  display: inline;
+  margin-left: 1em;
+  color: #5ece7b;
+}
+
+.navLink {
+  text-decoration: none;
+  display: inline;
+  margin-left: 1em;
+  color: #5ece7b;
+}
+
+.navLink:hover {
+  text-decoration: none;
+  color: #5ece7b;
+}
+
+.navLinkActive {
+  border-bottom: 3px solid #5ece7b;
+  padding-bottom: 1em;
+}
+.navIcon {
+  min-width: 1.5em;
+  max-width: 1.8em;
+  min-height: 1.5em;
+  cursor: pointer;
+}
+
+
+.navIconimg{
+  min-width: 3em;
+  max-width: 3em;
+  transform: translate(-50%, -50%) scale(0);
+  transition: 200ms ease-in-out;
+  cursor: pointer;
+}
+
+
+
+.cartToggle {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+
+.logo {
+  pointer-events: none;
+}
+.dropDown {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 1.25rem;
+  margin-right: 1em;
+  padding: .2em .75em;
+
+  
+}
+
+.dropDown:focus ,.dropDown:hover{
+  border: none;
+  background: none;
+
+
+}
+.dropDown option{
+  background: none;
+  border: none;
+
+
+}
+
+.currencyDropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100%+0.5rem);
+  background-color: #ffffff;
+  border-radius: 0.25rem;
+  opacity: 0;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.19);
+  transform: translateY(-10px);
+  transition: opacity 100ms ease-in-out, transform 50ms ease-in-out;
+  width: 100px;
+  height: auto;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.currencyDropdown.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  font-size: calc(10px + 1vmin);
+}
+.dropdown-content .currency{
+  width: fit-content;
+  background-color: rebeccapurple;
+} 
+
+.currency{
+display: flex;
+flex-direction: column;
+font-size: 1.25rem;
+
+
+}
+.currency button{
+  text-align: center;
+  align-content: center;
+  align-items: center;
+  background: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  border: none;
+  padding: .75em .1em;
+  
+  }
+  .currency button:hover {
+    
+    background-color: rgb(214, 211, 211);
+    
+    
+    }
+
+
+
+.navLink {
+  text-decoration: "none";
+  color: #1d1f22;
+}
+.action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2% 4%;
+  line-height: 19px;
+
+  font-family: Raleway;
+  font-size: 1.25rem;
+  font-style: normal;
+  text-align: center;
+  background: #5ece7b;
+  color: #ffffff;
+  width: 292px;
+  height: fit-content;
+  border: 0ch;
+  border-radius: 4%;
+  cursor: pointer;
+}
+.viewBag {
+  color: black;
+  background-color: white;
+  text-decoration: none;
+  border: 1px solid black;
+}
+
+.viewBag:hover {
+  color: white;
+  background-color: black;
+  border: 1px solid black;
+}
+
+.action-btn:disabled {
+  background: #5c5e5c;
+  color: #313030;
+  cursor: default;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
+}
+
+.thubnail {
+  width: 350px;
+  height: fit-content;
+  margin: 5em auto 1em 3em;
+  text-align: left;
+  line-height: 1.6;
+  background-color: #f9f9f9;
+  padding: 2%;
+
+
+}
+.thubnailimg {
+  width: 350px;
+  height: auto;
+  position: relative;
+}
+.popUpfeedBack{
+ width: 30%;
+ height: auto;
+ position: relative;
+ margin: auto 1em auto 1em;
+}
+
+
+
+
+.thubnail:hover {
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2), 0 10px 40px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+.thubnail .navIcon {
+  width: 150px;
+  max-width: 2.5em;
+  transform: translate(-30px, -40px);
+}
+
+.product-container {
+  display: flex;
+  flex-direction: row;
+  margin-left: 5em ;
+  margin-top: 5em ;
+
+  position: relative;
+
+}
+.images-container{
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: auto;
+  
+}
+.images-container img:first-child {
+  max-height: 511px;
+  max-width: 350px;
+  padding: 1em;
+  margin-left: 1em;
+  float: right;
+}
+
+.images-container .img-nav {
+  max-height: 511px;
+  width: 150px;
+
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+.images-container .img-nav img {
+  display: block;
+  min-width: 50px;
+  max-width: 100px;
+  max-height: 100px;
+  min-height: auto;
+  cursor: pointer;
+
+  padding: 1em;
+  border-radius: 0px;
+}
+
+.images-container .img-nav img:hover {
+  background-color: #5ece7b;
+}
+
+.product-info {
+  font-family: Raleway;
+  font-style: normal;
+  text-align: left;
+  margin-left: 2em;
+  margin-bottom: 10em;
+}
+.product-info .cart {
+  padding: 16px 32px;
+
+  width: fit-content;
+  height: auto;
+
+  background: #5ece7b;
+}
+
+.atributes {
+  display: flex;
+  width: 292px;
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+.colorAttribute{
+  width: 200px;
+  height: 200px;
+  color: #585858;
+}
+
+.gray{
+  color: gray;
+}
+
+
+/*
+  Hide radio button (the round disc)
+  we will use just the label to create pushbutton effect
+*/
+input[type="radio"] {
+  display: none;
+  margin: 10px;
+}
+
+#color-input {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 10px;
+  width: 20px;
+  height: 20px;
+  background-color: #ffffff;
+  text-align: center;
+}
+
+/*
+Change the look'n'feel of labels (which are adjacent to radiobuttons).
+Add some margin, padding to label
+*/
+input[type="radio"] + label {
+  font: Source Sans Pro;
+
+  display: inline-block;
+  margin-right: 5px;
+  padding: 10px;
+  background-color: #ffffff;
+  height: fit-content;
+  text-align: center;
+  width: fit-content;
+  border-style: solid;
+  border-width: 1px;
+  border-color: black;
+  cursor: pointer;
+}
+/*
+Change background color for label next to checked radio button
+to make it look like highlighted button
+*/
+input[type="radio"]:checked + label {
+  background-image: none;
+  color: #ffffff;
+  background-color: #1d1f22;
+  border-width: 3px;
+  border-color: #1f1f1f;
+}
+
+#discription {
+  color: #1d1f22;
+  max-width: 20em;
+}
+
+.link {
+  text-decoration: none;
+}
+
+/* this is pop up styling    */
+
+.model {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: 200ms ease-in-out;
+  border-radius: 10px;
+  z-index: 10;
+  background-color: #ffffff;
+  width: 500px;
+  min-height: 300px;
+  max-width: 80%;
+  color: #1d1f22;
+}
+.model.active {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.model-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5em;
+  padding-left: 1em;
+  text-align: center;
+  background-color: #5ece7b;
+}
+.model-header .title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: rgb(14, 14, 14);
+}
+
+.icon-button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #585858;
+  margin: 0;
+  padding: 0;
+}
+.model-body {
+  padding: 0.5em;
+  display: flex;
+}
+
+/* this is the add product  pop up*/
+.add-model {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: 200ms ease-in-out;
+  border-radius: 10px;
+  z-index: 10;
+  background-color: #ffffff;
+  width: 80%;
+  height: 80%;
+  overflow: auto;
+}
+.add-model.active {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.add-model .product-container {
+  margin-left: 0;
+}
+
+.add-model .product-info {
+  margin-left: 0;
+  margin-bottom: 0;
+}
+
+#overlay {
+  position: fixed;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  z-index: 8;
+  
+}
+#overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.overlaycart {
+  
+  position: fixed;
+  color: #0c5dd6;
+
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 6;
+  pointer-events: all;
+
+  background-color: rgba(0, 0, 0, .4);
+  
+}
+
+
+
+.cart-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 5%;
+  padding-bottom: 5%;
+  flex-basis: 40%;
+  width: 90%;
+}
+.cart-container .noItems {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 5%;
+  padding-bottom: 5%;
+  flex-basis: 40%;
+  width: 90%;
+}
+
+.cart-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5em;
+  font-size: calc(5px + 2vmin);
+  font-weight: 500;
+}
+.cart-info div {
+  width: 50%;
+}
+.cart-info .countColor {
+  color: #5ece7b
+}
+
+
+
+
+.cart-info .img-toggle {
+  align-content: center;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  width: calc(5px + 40vmin);
+}
+
+.cart-img {
+  display: block;
+  max-width: 100%;
+  max-height: auto;
+
+  height: auto;
+  cursor: pointer;
+  margin-right: 0%;
+  padding-left: 1em;
+  align-self: right;
+}
+.increament {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-content: center;
+  align-items: center;
+  height: 10%;
+}
+.increament button {
+  background: none;
+  width: fit-content;
+  height: 20%;
+  border: 1px solid black;
+  font-size: calc(5px + 2vmin);
+  cursor: pointer;
+}
+.increament button:disabled {
+  color: #9e9d9d;
+  background-color: #cfcfcf;
+  border: none;
+}
+
+.increament span {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-cart {
+  position: relative;
+  margin-left: 1.5em;
+}
+.currencySwitcher{
+  font-weight: 500;
+  font-size: 1.5rem;
+  cursor: pointer;
+  }
+
+.cart-badge{
+ background-color: #1d1f22;
+ color: #ffffff;
+ font-size: 50pxs;
+ border-radius: 100%;
+ text-align: center;
+ transform: translate(+50%, -200%) scale(1);
+ transition: 200ms ease-in-out;
+
+ 
+
+}
+
+
+.dropdown-cart a{
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 1.5rem;
+
+
+}
+
+.dropdown-content {
+  position: absolute;
+  right: 0;
+  top: calc(100%+0.5rem);
+  background-color: #ffffff;
+  border-radius: 0.25rem;
+  opacity: 0;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.19);
+  transform: translateY(-10px);
+  transition: opacity 100ms ease-in-out, transform 50ms ease-in-out;
+  width: 325px;
+  height: fit-content;
+  max-height: 40vmax;
+  pointer-events: none;
+  z-index: 10;
+  overflow-y: auto;
+}
+.dropdown-content .cart-info {
+  font-size: 15px !important;
+}
+.dropdown-content.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  font-size: calc(10px + 1vmin);
+}
+
+
+
+.divContainer{
+  width: 350px;
+  height: fit-content;
+	  position: relative;
+
+}
+.categoryName{
+text-align: left;
+margin-left: 3em;
+}
+
+.outOfSock, .outer {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.outOfSock{
+
+  width: inherit;
+margin-left: inherit;
+padding-right: 1em;
+  background-color: rgba(216, 216, 218, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(161, 161, 161);
+  
+  font-family: Raleway;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 38px;
+  letter-spacing: 0px;
+  text-align: left;
+  pointer-events: none;
+  
+
+
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(56, 209, 50, 0.3); 
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  -webkit-box-shadow: inset 0 0 6px rgba(138, 137, 137, 0.5); 
+}
