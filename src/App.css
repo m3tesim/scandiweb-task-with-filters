@@ -29,7 +29,6 @@
   margin-bottom: 50px;
   background-color: #ffffff;
   padding: 1em;
-
 }
 
 .navBar {
@@ -50,12 +49,49 @@
   margin-left: 1em;
   color: #5ece7b;
 }
+.filters {
+  display: inline-block;
+  gap: 0.5rem;
+  margin-left: 4rem;
+  cursor: pointer;
+}
+
+.filterIcon{
+  transform: scale(1.2);
+  margin-left:.5rem
+}
+
+
+.filtersList {
+  position: absolute;
+  top: calc(100%+0.5rem);
+  background-color: #ffffff;
+  border-radius: 0.25rem;
+  opacity: 0;
+  box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.19);
+  transform: translateY(5rem);
+  transition: opacity 100ms ease-in-out, transform 50ms ease-in-out;
+  width: 80vw;
+  height: fit-content;
+  text-align: center;
+  max-height: 40vmax;
+  pointer-events: none;
+  z-index: 10;
+  overflow-y: auto;
+  padding: 2rem;
+}
+
+.filtersList.active {
+  opacity: 1;
+  transform: translateY(-30);
+  pointer-events: auto;
+  font-size: calc(10px + 1vmin);
+}
 
 .navLink {
   text-decoration: none;
   display: inline;
   margin-left: 1em;
-  color: #5ece7b;
 }
 
 .navLink:hover {
@@ -74,8 +110,7 @@
   cursor: pointer;
 }
 
-
-.navIconimg{
+.navIconimg {
   min-width: 3em;
   max-width: 3em;
   transform: translate(-50%, -50%) scale(0);
@@ -83,16 +118,13 @@
   cursor: pointer;
 }
 
-
-
 .cartToggle {
   transform: translate(-50%, -50%) scale(1);
 }
 
-
 .logo {
   pointer-events: none;
-}
+  margin-left: -15rem}
 .dropDown {
   cursor: pointer;
   border: none;
@@ -100,22 +132,17 @@
   background: none;
   font-size: 1.25rem;
   margin-right: 1em;
-  padding: .2em .75em;
-
-  
+  padding: 0.2em 0.75em;
 }
 
-.dropDown:focus ,.dropDown:hover{
+.dropDown:focus,
+.dropDown:hover {
   border: none;
   background: none;
-
-
 }
-.dropDown option{
+.dropDown option {
   background: none;
   border: none;
-
-
 }
 
 .currencyDropdown {
@@ -140,19 +167,17 @@
   pointer-events: auto;
   font-size: calc(10px + 1vmin);
 }
-.dropdown-content .currency{
+.dropdown-content .currency {
   width: fit-content;
   background-color: rebeccapurple;
-} 
-
-.currency{
-display: flex;
-flex-direction: column;
-font-size: 1.25rem;
-
-
 }
-.currency button{
+
+.currency {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.25rem;
+}
+.currency button {
   text-align: center;
   align-content: center;
   align-items: center;
@@ -160,17 +185,11 @@ font-size: 1.25rem;
   font-size: 1.25rem;
   cursor: pointer;
   border: none;
-  padding: .75em .1em;
-  
-  }
-  .currency button:hover {
-    
-    background-color: rgb(214, 211, 211);
-    
-    
-    }
-
-
+  padding: 0.75em 0.1em;
+}
+.currency button:hover {
+  background-color: rgb(214, 211, 211);
+}
 
 .navLink {
   text-decoration: "none";
@@ -228,28 +247,22 @@ font-size: 1.25rem;
   line-height: 1.6;
   background-color: #f9f9f9;
   padding: 2%;
-
-
 }
 .thubnailimg {
   width: 350px;
   height: auto;
   position: relative;
 }
-.popUpfeedBack{
- width: 30%;
- height: auto;
- position: relative;
- margin: auto 1em auto 1em;
+.popUpfeedBack {
+  width: 30%;
+  height: auto;
+  position: relative;
+  margin: auto 1em auto 1em;
 }
-
-
-
 
 .thubnail:hover {
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2), 0 10px 40px 0 rgba(0, 0, 0, 0.19);
 }
-
 
 .thubnail .navIcon {
   width: 150px;
@@ -260,17 +273,15 @@ font-size: 1.25rem;
 .product-container {
   display: flex;
   flex-direction: row;
-  margin-left: 5em ;
-  margin-top: 5em ;
+  margin-left: 5em;
+  margin-top: 5em;
 
   position: relative;
-
 }
-.images-container{
+.images-container {
   display: grid;
   grid-template-columns: 1fr 3fr;
   grid-template-rows: auto;
-  
 }
 .images-container img:first-child {
   max-height: 511px;
@@ -327,16 +338,15 @@ font-size: 1.25rem;
   cursor: pointer;
 }
 
-.colorAttribute{
+.colorAttribute {
   width: 200px;
   height: 200px;
   color: #585858;
 }
 
-.gray{
+.gray {
   color: gray;
 }
-
 
 /*
   Hide radio button (the round disc)
@@ -485,7 +495,6 @@ input[type="radio"]:checked + label {
   background-color: rgba(0, 0, 0, 0.5);
   pointer-events: none;
   z-index: 8;
-  
 }
 #overlay.active {
   opacity: 1;
@@ -493,7 +502,6 @@ input[type="radio"]:checked + label {
 }
 
 .overlaycart {
-  
   position: fixed;
   color: #0c5dd6;
 
@@ -504,11 +512,8 @@ input[type="radio"]:checked + label {
   z-index: 6;
   pointer-events: all;
 
-  background-color: rgba(0, 0, 0, .4);
-  
+  background-color: rgba(0, 0, 0, 0.4);
 }
-
-
 
 .cart-container {
   display: flex;
@@ -541,11 +546,8 @@ input[type="radio"]:checked + label {
   width: 50%;
 }
 .cart-info .countColor {
-  color: #5ece7b
+  color: #5ece7b;
 }
-
-
-
 
 .cart-info .img-toggle {
   align-content: center;
@@ -602,32 +604,26 @@ input[type="radio"]:checked + label {
   position: relative;
   margin-left: 1.5em;
 }
-.currencySwitcher{
+.currencySwitcher {
   font-weight: 500;
   font-size: 1.5rem;
   cursor: pointer;
-  }
-
-.cart-badge{
- background-color: #1d1f22;
- color: #ffffff;
- font-size: 50pxs;
- border-radius: 100%;
- text-align: center;
- transform: translate(+50%, -200%) scale(1);
- transition: 200ms ease-in-out;
-
- 
-
 }
 
+.cart-badge {
+  background-color: #1d1f22;
+  color: #ffffff;
+  font-size: 50pxs;
+  border-radius: 100%;
+  text-align: center;
+  transform: translate(+50%, -200%) scale(1);
+  transition: 200ms ease-in-out;
+}
 
-.dropdown-cart a{
+.dropdown-cart a {
   cursor: pointer;
   font-weight: 500;
   font-size: 1.5rem;
-
-
 }
 
 .dropdown-content {
@@ -657,37 +653,34 @@ input[type="radio"]:checked + label {
   font-size: calc(10px + 1vmin);
 }
 
-
-
-.divContainer{
+.divContainer {
   width: 350px;
   height: fit-content;
-	  position: relative;
-
+  position: relative;
 }
-.categoryName{
-text-align: left;
-margin-left: 3em;
+.categoryName {
+  text-align: left;
+  margin-left: 3em;
 }
 
-.outOfSock, .outer {
+.outOfSock,
+.outer {
   width: 100%;
   height: 100%;
   position: absolute;
   top: 0;
   left: 0;
 }
-.outOfSock{
-
+.outOfSock {
   width: inherit;
-margin-left: inherit;
-padding-right: 1em;
+  margin-left: inherit;
+  padding-right: 1em;
   background-color: rgba(216, 216, 218, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
   color: rgb(161, 161, 161);
-  
+
   font-family: Raleway;
   font-size: 24px;
   font-style: normal;
@@ -696,9 +689,6 @@ padding-right: 1em;
   letter-spacing: 0px;
   text-align: left;
   pointer-events: none;
-  
-
-
 }
 
 ::-webkit-scrollbar {
@@ -706,11 +696,11 @@ padding-right: 1em;
 }
 
 ::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(56, 209, 50, 0.3); 
+  -webkit-box-shadow: inset 0 0 6px rgba(56, 209, 50, 0.3);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
   border-radius: 5px;
-  -webkit-box-shadow: inset 0 0 6px rgba(138, 137, 137, 0.5); 
+  -webkit-box-shadow: inset 0 0 6px rgba(138, 137, 137, 0.5);
 }

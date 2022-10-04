@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import shoppingbag from "../assets/baglogo.svg";
 import cartIcon from "../assets/cart.svg";
+import filtersIcon from "../assets/filters.svg";
+
 import { getproductByCategory } from "../actions/productsAction";
 import getCurrency from "../actions/currencyAction";
 import { Link, NavLink } from "react-router-dom";
@@ -9,66 +11,70 @@ import { Listitems } from "./cart";
 import { totalPrice } from "../actions/addToCart";
 
 class Nav extends Component {
-
-
   state = {
     category: this.props.categories.categories,
     dropDown: false,
-    active: "all",
     currencyDropDown: false,
+    filtersDropDown: false,
+    active: "all",
   };
-  
+
   componentDidMount() {
     document.addEventListener("click", this.handleClickOutside, true);
-
   }
   componentWillUnmount() {
     document.removeEventListener("click", this.handleClickOutside, true);
-
   }
 
-
-  
   componentDidUpdate(prevProps) {
     // Typical usage (don't forget to compare props):
     if (this.props.cart.items.length !== prevProps.cart.items.length) {
-      this.calculateTotalPrice()
+      this.calculateTotalPrice();
     }
   }
 
-  calculateTotalPrice = (v=0) => {
+  calculateTotalPrice = (v = 0) => {
     const { cart, currencies } = this.props;
 
-      
     // this function filter the products currency  based on the currency type in store state "currencies"
 
-    const allPrices = cart.items.map((i) => 
-    {
-     let currencyPrice= i.prices.filter((c) => c.currency.label === currencies.label)
+    const allPrices = cart.items.map((i) => {
+      let currencyPrice = i.prices.filter(
+        (c) => c.currency.label === currencies.label
+      );
 
-     let result = currencyPrice.map((p) => p.amount * (i.count+ v))
+      let result = currencyPrice.map((p) => p.amount * (i.count + v));
 
-      return result 
-    }
-    );
+      return result;
+    });
 
     // calculating the total price amount of all products
     let total = allPrices.map((i) => i[0]).reduce((Sum, a) => Sum + a, 0);
 
     this.props.dispatch(totalPrice(total));
-
-
   };
 
   dropDown = () => {
-    this.setState({ dropDown: !this.state.dropDown, currencyDropDown: false });
+    this.setState({
+      dropDown: !this.state.dropDown,
+      currencyDropDown: false,
+      filtersDropDown: false,
+    });
     this.calculateTotalPrice();
+  };
+  FiltersDropDown = () => {
+    this.setState({
+      filtersDropDown: !this.state.filtersDropDown,
+      currencyDropDown: false,
+      dropDown: false,
+    });
   };
 
   currencyDropDown = () => {
     this.setState({
       currencyDropDown: !this.state.currencyDropDown,
       dropDown: false,
+      filtersDropDown: false,
     });
   };
 
@@ -97,6 +103,7 @@ class Nav extends Component {
       this.setState({
         currencyDropDown: false,
         dropDown: false,
+        filtersDropDown: false,
       });
     }
   };
@@ -116,12 +123,25 @@ class Nav extends Component {
                     } `}
                     onClick={() => this.ChangeCategory(g.name)}
                     to="/"
-
                     value={g.name}>
                     {g.name.toUpperCase()}
                   </NavLink>
                 </li>
               ))}
+              <div onClick={() => this.FiltersDropDown()} className="filters">
+                FILTERS
+                <img
+                  src={filtersIcon}
+                  alt="filters-icon"
+                  className="filterIcon"
+                />
+              </div>
+            </div>
+            <div
+              className={`filtersList   ${
+                this.state.filtersDropDown && `active`
+              }`}>
+              <FiltersList />
             </div>
 
             <div className="navIcon logo ">
@@ -174,7 +194,7 @@ class Nav extends Component {
         </div>
         <div
           className={` ${
-            this.state.dropDown === true ? "overlaycart" : "non"
+            this.state.dropDown || this.state.filtersDropDown  ? "overlaycart" : "non"
           }`}></div>
       </>
     );
@@ -225,6 +245,16 @@ export class CurrencySwitcher extends Component {
           ₽ RUB
         </button>
       </div>
+    );
+  }
+}
+
+class FiltersList extends Component {
+  render() {
+    return (
+      <>
+        <div>list items go there</div>
+      </>
     );
   }
 }

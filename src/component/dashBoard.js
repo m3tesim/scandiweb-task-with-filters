@@ -6,7 +6,7 @@ import { handleProducts  } from "../actions/shared";
 class DashBoard extends Component {
 
   componentDidMount() {
-    if(this.props.loading===true)
+    if(this.props.loading)
  {this.props.dispatch(handleProducts())
   }else return
 }
@@ -26,7 +26,7 @@ class DashBoard extends Component {
    
     return (
       <div>
-     {loading === true ? null : 
+     {loading ? null : 
         <>
 
         <div className="categoryName">
