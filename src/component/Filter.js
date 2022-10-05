@@ -42,10 +42,11 @@ class FiltersList extends Component {
 
     //console.log(this.props.products, "list props");
     return (
-      <>
-        <div>list items go theree</div>
+      <div>
+        <h5>Filters</h5>
+
         <Attributes data={uniqueAtr} />
-      </>
+      </div>
     );
   }
 }
@@ -53,34 +54,34 @@ class FiltersList extends Component {
 export default FiltersList;
 
 class Attributes extends Component {
+  state={
+    "sizeListActive":false
+  }
+  sizeDropDown(){
+    this.setState({sizeListActive:!this.state.sizeListActive })
+    console.log("clicked on size list")
+  }
   render() {
     //getting products category attributes object and make array of ites key vales
     const data = this.props.data;
     const filterData = Object.keys(data);
     let attributes;
-    console.log(filterData,"from attributes components")
+    console.log(filterData, "from attributes components");
     //for every atrributes type render different output dynamically
+    const{sizeListActive}=this.state
     try {
       attributes = filterData.map((atr) => {
         switch (atr) {
           case "Size":
             return (
-              <div key={atr}>
-                <h5>{atr}</h5>
-
+              <div key={atr} >
                 <div className="atributes">
-                  {data[atr].items.map((item) => (
-                    <div key={item}>
-                      <input
-                        type="radio"
-                        id={item}
-                        name={atr}
-                        value={item}
-                        // onChange={(e) => this.changeAttribute(e, atr)}
-                      />
-                      <label htmlFor={item}> {item}</label>
-                    </div>
-                  ))}
+                  <div onClick={()=>(this.sizeDropDown())}>{atr}⌄</div>
+                  <div className ={ `selectListDropdown  ${sizeListActive&&"activeList"}`  }  >
+
+                  {<SelectList attribute={atr} items={data[atr].items} />}
+
+                  </div>
                 </div>
               </div>
             );
@@ -107,20 +108,36 @@ class Attributes extends Component {
             );
 
           default:
-            return <p key={atr}>"not found "</p>;
+            return null;
         }
       });
     } catch (error) {
       attributes = [];
 
-      console.log(`error happend  in Attributes component`)
-      console.error(error)
+      console.log(`error happend  in Attributes component`);
+      console.error(error);
     }
 
-    return <div>
-      
-      this attribtes component
-      {attributes}</div>;
+    return <div className="filterContent">{attributes}</div>;
+  }
+}
+
+class SelectList extends Component {
+  toggleSelection(e) {
+    console.log(e.target.value, "have been clicked");
+  }
+
+  render() {
+    const { attribute, items } = this.props;
+    return (
+      <div className="selectList">
+        {items.map((i) => (
+          <button onClick={(e) => this.toggleSelection(e)} value={i}>
+            {i}
+          </button>
+        ))}
+      </div>
+    );
   }
 }
 /*

@@ -9,7 +9,7 @@ import getCurrency from "../actions/currencyAction";
 import { Link, NavLink } from "react-router-dom";
 import { Listitems } from "./cart";
 import { totalPrice } from "../actions/addToCart";
-import Filter from "./Filter";
+import Filter from "./filter";
 class Nav extends Component {
   state = {
     category: this.props.categories.categories,
@@ -233,7 +233,7 @@ export class CurrencySwitcher extends Component {
   };
   render() {
     return (
-      <div className="currency">
+      <div className="selectList">
         <button onClick={(e) => this.changeCurrency(e)} value="USD" name="$">
           $ USD
         </button>
