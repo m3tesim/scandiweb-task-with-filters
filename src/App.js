@@ -50,9 +50,9 @@ class App extends React.Component {
 
 export default connect(mapStateToProps)(App);
 
-function mapStateToProps({ currencies, categories }) {
+function mapStateToProps({ currencies, categories, products }) {
   return {
-    loading: currencies === null,
+    loading: currencies === null ,
     categories,
   };
 }
