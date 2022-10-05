@@ -9,7 +9,7 @@ import getCurrency from "../actions/currencyAction";
 import { Link, NavLink } from "react-router-dom";
 import { Listitems } from "./cart";
 import { totalPrice } from "../actions/addToCart";
-
+import Filter from "./Filter";
 class Nav extends Component {
   state = {
     category: this.props.categories.categories,
@@ -109,7 +109,7 @@ class Nav extends Component {
   };
 
   render() {
-    const { categories, cart, currencies, dispatch } = this.props;
+    const { categories, cart, currencies, dispatch, products } = this.props;
     return (
       <>
         <div className="nav-container" ref={this.wrapper}>
@@ -141,7 +141,7 @@ class Nav extends Component {
               className={`filtersList   ${
                 this.state.filtersDropDown && `active`
               }`}>
-              <FiltersList />
+              {<Filter products={products} />}
             </div>
 
             <div className="navIcon logo ">
@@ -194,7 +194,9 @@ class Nav extends Component {
         </div>
         <div
           className={` ${
-            this.state.dropDown || this.state.filtersDropDown  ? "overlaycart" : "non"
+            this.state.dropDown || this.state.filtersDropDown
+              ? "overlaycart"
+              : "non"
           }`}></div>
       </>
     );
@@ -203,14 +205,17 @@ class Nav extends Component {
 
 export default connect(mapStateToProps)(Nav);
 
-function mapStateToProps({ categories, currencies, cart }) {
+function mapStateToProps({ categories, currencies, cart, products }) {
   //console.log(JSON.stringify(currencies))
   return {
     categories,
     currencies,
     cart,
+    products: products?.category.products,
   };
 }
+
+
 
 export class CurrencySwitcher extends Component {
   state = {
@@ -245,16 +250,6 @@ export class CurrencySwitcher extends Component {
           ₽ RUB
         </button>
       </div>
-    );
-  }
-}
-
-class FiltersList extends Component {
-  render() {
-    return (
-      <>
-        <div>list items go there</div>
-      </>
     );
   }
 }
