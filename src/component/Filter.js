@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 
 class FiltersList extends Component {
+
+ 
   render() {
     //filtering attrubutes from all products in category
-    let productsAtrributes = this.props.products?.map((i) => {
-      return i.attributes[0];
-    });
-    productsAtrributes = productsAtrributes?.filter((i) => i !== undefined);
+    let productsAtrributes = this.props.products?.map((i) => ( i.attributes.map(i=>i)));
+    productsAtrributes=productsAtrributes.reduce((a,b)=>a.concat(b),[] )
 
+    //productsAtrributes = productsAtrributes?.filter((i) => i !== undefined);
+    console.log(productsAtrributes,"this is the first step in filtering")
     // grouping  all atributes based on the name of it, ignoring  which products it belongs to
     let allAtr = [];
     for (let i of productsAtrributes) {
@@ -19,7 +21,7 @@ class FiltersList extends Component {
     // removes dublicates attribtes that comes from different products
     let uniqueAtr = {};
     for (let i of allAtr) {
-      console.log(i, "inside for loop of uniqueAtr");
+    //  console.log(i, "inside for loop of uniqueAtr");
       let thisName = i.name;
       let thisAtr = i.atr.map((i) => i.value);
 
@@ -28,7 +30,7 @@ class FiltersList extends Component {
       }
 
       // filtering dublicated arttibutes
-      // else{ uniqueAtr[thisName]=   [...new Set(uniqueAtr[thisName].atr.concat(thisAtr)) ] }
+    //   else{ uniqueAtr[thisName]=   [...new Set(uniqueAtr[thisName].items.concat(thisAtr)) ] }
     }
 
     console.log(allAtr, "atr");
@@ -55,12 +57,18 @@ export default FiltersList;
 
 class Attributes extends Component {
   state={
-    "sizeListActive":false
+    "sizeListActive":false,
+    "capacityList":false
   }
   sizeDropDown(){
     this.setState({sizeListActive:!this.state.sizeListActive })
     console.log("clicked on size list")
   }
+  dropDown(listName){
+    this.setState({[listName]:!this.state[listName] })
+    console.log("clicked on size list")
+  }
+
   render() {
     //getting products category attributes object and make array of ites key vales
     const data = this.props.data;
@@ -68,7 +76,7 @@ class Attributes extends Component {
     let attributes;
     console.log(filterData, "from attributes components");
     //for every atrributes type render different output dynamically
-    const{sizeListActive}=this.state
+    const{sizeListActive,capacityList}=this.state
     try {
       attributes = filterData.map((atr) => {
         switch (atr) {
@@ -86,26 +94,39 @@ class Attributes extends Component {
               </div>
             );
 
-            return (
-              <div key={atr.name}>
-                <h5>{atr.name}</h5>
-
-                <div className="atributes">
-                  {atr.items.map((i) => (
-                    <div key={i.id}>
-                      <input
-                        type="radio"
-                        id={i.value + "1"}
-                        name={atr.name}
-                        value={i.value}
-                        onChange={(e) => this.changeAttribute(e, atr.name)}
-                      />
-                      <label htmlFor={i.value + "1"}> {i.value}</label>
+            case "Capacity":
+              return (
+                <div key={atr} >
+                  <div className="atributes">
+                    <div onClick={()=>(this.dropDown("capacityList"))}>{atr}⌄</div>
+                    <div className ={ `selectListDropdown  ${capacityList&&"activeList"}`  }  >
+  
+                    {<SelectList attribute={atr} items={data[atr].items} />}
+  
                     </div>
-                  ))}
+                  </div>
                 </div>
-              </div>
-            );
+              );
+              case "Touch ID in keyboard":
+                return (
+                  <div key={atr}>
+                    <h5>{atr}</h5>
+    
+                    <div className="atributes">
+                      {data[atr].items.map((i) => (
+                        <div key={i.id}>
+                          <input
+                            type="radio"
+                            id={i+ "1"}
+                            name={atr}
+                            value={i}
+                          />
+                          <label htmlFor={i + "1"}> {i}</label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
 
           default:
             return null;
@@ -118,7 +139,9 @@ class Attributes extends Component {
       console.error(error);
     }
 
-    return <div className="filterContent">{attributes}</div>;
+    return (
+    <div className="filterContent">{attributes}</div>
+    );
   }
 }
 
