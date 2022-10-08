@@ -1,45 +1,18 @@
 import React, { Component } from "react";
 
 class FiltersList extends Component {
+  applyFilter = (atribute) => {
+    // this.props.dispatch(getProducts(products));
+    // this.setState({ active: category });
+  };
+
   render() {
-    //filtering attrubutes from all products in category
-    let productsAtrributes = this.props.products?.map((i) =>
-      i.attributes.map((i) => i)
-    );
-    productsAtrributes = productsAtrributes.reduce((a, b) => a.concat(b), []);
-
-    //productsAtrributes = productsAtrributes?.filter((i) => i !== undefined);
-    console.log(productsAtrributes, "this is the first step in filtering");
-    // grouping  all atributes based on the name of it, ignoring  which products it belongs to
-    let allAtr = [];
-    for (let i of productsAtrributes) {
-      let atr = i?.items;
-      let id = i?.id;
-      allAtr = allAtr.concat({ name: id, atr: atr });
-    }
-    // removes dublicates attribtes that comes from different products
-    let uniqueAtr = {};
-    for (let i of allAtr) {
-      let thisName = i.name;
-      let thisAtr = i.atr.map((i) => i.value);
-
-      if (!uniqueAtr[thisName]) {
-        uniqueAtr[thisName] = { name: thisName, items: thisAtr };
-      }
-
-      // filtering dublicated arttibutes
-      //   else{ uniqueAtr[thisName]=   [...new Set(uniqueAtr[thisName].items.concat(thisAtr)) ] }
-    }
-
-    console.log(allAtr, "atr");
-    console.log(uniqueAtr, "unique");
-
-    console.log(productsAtrributes, "products  attributess");
+    let atributes = getAttributes(this.props.products);
 
     return (
       <div className="filtersContainer">
         <div className="filtersTitle">Filters</div>
-        <Attributes data={uniqueAtr} />
+        <Attributes data={atributes} applyFilter={this.applyFilter} />
         <div>
           {" "}
           <button className="btn">Reset Filters</button>
@@ -69,9 +42,10 @@ class Attributes extends Component {
   render() {
     //getting products category attributes object and make array of ites key vales
     const data = this.props.data;
+    const { applyFilter } = this.props;
     const filterData = Object.keys(data);
     let attributes;
-    console.log(filterData, "from attributes components");
+    // console.log(filterData, "from attributes components");
     //for every atrributes type render different output dynamically
     try {
       attributes = filterData.map((atr) => {
@@ -79,7 +53,13 @@ class Attributes extends Component {
           case "Color":
             return <RadioButton atr={atr} items={data[atr].items} />;
           case "Size":
-            return <SelectList atr={atr} items={data[atr].items} />;
+            return (
+              <SelectList
+                atr={atr}
+                items={data[atr].items}
+                applyFilter={applyFilter}
+              />
+            );
 
           case "Capacity":
             return <SelectList atr={atr} items={data[atr].items} />;
@@ -174,16 +154,71 @@ class SelectList extends Component {
           }`}>
           <div className="selectList">
             {items.map((i) => (
-              <button
-                key={i}
-                onClick={(e) => this.toggleSelection(e)}
-                value={i}>
-                {i}
-              </button>
+              <Button item={i} toggleSelection={this.toggleSelection} />
             ))}
           </div>
         </div>
       </div>
     );
   }
+}
+class Button extends Component {
+  state = { active: false };
+  clicked = (e) => {
+    this.setState({
+      active: !this.state.active,
+    });
+    this.props.toggleSelection(e);
+  };
+
+  render() {
+    console.log(this.state.active);
+
+    const { item } = this.props;
+
+    return (
+      <button
+        className={`${this.state.active && "activeListItem"}`}
+        key={item}
+        onClick={(e) => this.clicked(e)}
+        value={item}>
+        {item}
+      </button>
+    );
+  }
+}
+
+function getAttributes(products) {
+  //filtering attrubutes from all products in category
+  let productsAtrributes = products?.map((i) => i.attributes.map((i) => i));
+  productsAtrributes = productsAtrributes.reduce((a, b) => a.concat(b), []);
+
+  //productsAtrributes = productsAtrributes?.filter((i) => i !== undefined);
+  // console.log(productsAtrributes, "this is the first step in filtering");
+  // grouping  all atributes based on the name of it, ignoring  which products it belongs to
+  let allAtr = [];
+  for (let i of productsAtrributes) {
+    let atr = i?.items;
+    let id = i?.id;
+    allAtr = allAtr.concat({ name: id, atr: atr });
+  }
+  // removes dublicates attribtes that comes from different products
+  let uniqueAtr = {};
+  for (let i of allAtr) {
+    let thisName = i.name;
+    let thisAtr = i.atr.map((i) => i.value);
+
+    if (!uniqueAtr[thisName]) {
+      uniqueAtr[thisName] = { name: thisName, items: thisAtr };
+    }
+
+    // filtering dublicated arttibutes
+    //   else{ uniqueAtr[thisName]=   [...new Set(uniqueAtr[thisName].items.concat(thisAtr)) ] }
+  }
+
+  return uniqueAtr;
+  // console.log(allAtr, "atr");
+  // console.log(uniqueAtr, "unique");
+
+  // console.log(productsAtrributes, "products  attributess");
 }

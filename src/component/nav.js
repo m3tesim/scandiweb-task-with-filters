@@ -141,7 +141,7 @@ class Nav extends Component {
               className={`filtersList   ${
                 this.state.filtersDropDown && `active`
               }`}>
-              {  products&&<Filter products={products} />}
+              {products && <Filter products={products} dispatch={dispatch} />}
             </div>
 
             <div className="navIcon logo ">
@@ -214,8 +214,6 @@ function mapStateToProps({ categories, currencies, cart, products }) {
     products: products?.category?.products,
   };
 }
-
-
 
 export class CurrencySwitcher extends Component {
   state = {
