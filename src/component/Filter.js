@@ -1,27 +1,26 @@
 import React, { Component } from "react";
 import SelectList from "./selectList";
 class FiltersList extends Component {
-  
-
-
-  
+  state = {
+    filters: [],
+  };
 
   render() {
-    const params = new URLSearchParams()
+    const params = new URLSearchParams();
 
-    const applyFilter = (atr,item) => {
-      console.log(atr,item, "from Apply filters");
+    const applyFilter = (atr, items) => {
       // this.setState({ active: category });
-      params.append(atr, item)
-      params.append("atr", "item")
 
+      params.append(atr, items);
 
       //console.log(params.entries,"this is from urlsearch params API")
-    //console.log(this.props.history,"history");
-      this.props.history.push(params.toString())
-      
-      console.log(this.props.history,"history");
+      //console.log(this.props.history,"history");
 
+      this.props.history.push({
+        pathname: "/",
+        search: params.toString(), // '?name=John&age=32
+      });
+      // console.log(this.props.history,"history");
     };
 
     let atributes = getAttributes(this.props.products);
@@ -56,7 +55,7 @@ class Attributes extends Component {
   }
 
   render() {
-   // this.props.applyFilter("e");
+    // this.props.applyFilter("e");
 
     //getting products category attributes object and make array of ites key vales
     const data = this.props.data;
@@ -80,7 +79,14 @@ class Attributes extends Component {
             );
 
           case "Capacity":
-            return <SelectList key={atr} atr={atr} items={data[atr].items} />;
+            return (
+              <SelectList
+                key={atr}
+                atr={atr}
+                items={data[atr].items}
+                applyFilter={this.props.applyFilter}
+              />
+            );
           case "Touch ID in keyboard":
             return <CheckBox key={atr} atr={atr} items={data[atr].items} />;
 
