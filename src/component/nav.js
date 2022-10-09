@@ -141,7 +141,7 @@ class Nav extends Component {
               className={`filtersList   ${
                 this.state.filtersDropDown && `active`
               }`}>
-              {products && <Filter products={products} dispatch={dispatch} />}
+              {products && <Filter history={this.props.history} products={products} dispatch={dispatch} />}
             </div>
 
             <div className="navIcon logo ">

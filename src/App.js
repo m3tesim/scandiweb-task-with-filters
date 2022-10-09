@@ -13,19 +13,17 @@ class App extends React.Component {
   }
 
   render() {
-    const { loading} = this.props;
+    const { loading } = this.props;
 
     return (
       <div className="app-container">
         <div className="App">
-        
-        {loading === true ? null :<Nav />}
+          {loading === true ? null : (
+            <Route  path="/" render={(props) => <Nav {...props} />} />
+          )}
 
           <Switch>
-            <Route exact path="/">
-              {loading   === true ? null : <DashBoard />}
-            </Route>
-
+          
             {loading === true ? null : (
               <Route
                 path="/product/:id"
@@ -35,12 +33,22 @@ class App extends React.Component {
                       params: { id },
                     },
                   } = props;
+
                   return <ProductPage key={`id=${id}`} {...props} />;
                 }}
               />
             )}
 
             <Route path="/cart" component={Cart}></Route>
+
+            {loading === true ? null : (
+              <Route
+                
+                path="/"
+                render={(props) => <DashBoard {...props} />}
+              />
+            )}
+
           </Switch>
         </div>
       </div>
@@ -52,7 +60,7 @@ export default connect(mapStateToProps)(App);
 
 function mapStateToProps({ currencies, categories, products }) {
   return {
-    loading: currencies === null ,
+    loading: currencies === null,
     categories,
   };
 }

@@ -12,10 +12,10 @@ class DashBoard extends Component {
 }
 
 
-
   render() {
 
 
+    console.log(this.props.location,"from dash board");
 
 
     const { products, category, loading } = this.props

@@ -1,18 +1,34 @@
 import React, { Component } from "react";
-
+import SelectList from "./selectList";
 class FiltersList extends Component {
-  applyFilter = (atribute) => {
-    // this.props.dispatch(getProducts(products));
-    // this.setState({ active: category });
-  };
+  
+
+
+  
 
   render() {
-    let atributes = getAttributes(this.props.products);
+    const params = new URLSearchParams()
 
+    const applyFilter = (atr,item) => {
+      console.log(atr,item, "from Apply filters");
+      // this.setState({ active: category });
+      params.append(atr, item)
+      params.append("atr", "item")
+
+
+      //console.log(params.entries,"this is from urlsearch params API")
+    //console.log(this.props.history,"history");
+      this.props.history.push(params.toString())
+      
+      console.log(this.props.history,"history");
+
+    };
+
+    let atributes = getAttributes(this.props.products);
     return (
       <div className="filtersContainer">
         <div className="filtersTitle">Filters</div>
-        <Attributes data={atributes} applyFilter={this.applyFilter} />
+        <Attributes data={atributes} applyFilter={applyFilter} />
         <div>
           {" "}
           <button className="btn">Reset Filters</button>
@@ -40,9 +56,10 @@ class Attributes extends Component {
   }
 
   render() {
+   // this.props.applyFilter("e");
+
     //getting products category attributes object and make array of ites key vales
     const data = this.props.data;
-    const { applyFilter } = this.props;
     const filterData = Object.keys(data);
     let attributes;
     // console.log(filterData, "from attributes components");
@@ -51,23 +68,24 @@ class Attributes extends Component {
       attributes = filterData.map((atr) => {
         switch (atr) {
           case "Color":
-            return <RadioButton atr={atr} items={data[atr].items} />;
+            return <RadioButton key={atr} atr={atr} items={data[atr].items} />;
           case "Size":
             return (
               <SelectList
+                key={atr}
                 atr={atr}
                 items={data[atr].items}
-                applyFilter={applyFilter}
+                applyFilter={this.props.applyFilter}
               />
             );
 
           case "Capacity":
-            return <SelectList atr={atr} items={data[atr].items} />;
+            return <SelectList key={atr} atr={atr} items={data[atr].items} />;
           case "Touch ID in keyboard":
-            return <CheckBox atr={atr} items={data[atr].items} />;
+            return <CheckBox key={atr} atr={atr} items={data[atr].items} />;
 
           case "With USB 3 ports":
-            return <CheckBox atr={atr} items={data[atr].items} />;
+            return <CheckBox key={atr} atr={atr} items={data[atr].items} />;
 
           default:
             return null;
@@ -126,64 +144,6 @@ class CheckBox extends Component {
           </div>
         </div>
       </div>
-    );
-  }
-}
-
-class SelectList extends Component {
-  state = {
-    active: false,
-  };
-  dropDown() {
-    this.setState({ active: !this.state.active });
-    console.log("clicked on  list");
-  }
-
-  toggleSelection(e) {
-    console.log(e.target.value, "have been clicked");
-  }
-
-  render() {
-    const { atr, items } = this.props;
-    return (
-      <div className="filterAtributes">
-        <div onClick={() => this.dropDown()}>{atr}⌄</div>
-        <div
-          className={`selectListDropdown  ${
-            this.state.active && "activeList"
-          }`}>
-          <div className="selectList">
-            {items.map((i) => (
-              <Button item={i} toggleSelection={this.toggleSelection} />
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
-class Button extends Component {
-  state = { active: false };
-  clicked = (e) => {
-    this.setState({
-      active: !this.state.active,
-    });
-    this.props.toggleSelection(e);
-  };
-
-  render() {
-    console.log(this.state.active);
-
-    const { item } = this.props;
-
-    return (
-      <button
-        className={`${this.state.active && "activeListItem"}`}
-        key={item}
-        onClick={(e) => this.clicked(e)}
-        value={item}>
-        {item}
-      </button>
     );
   }
 }
