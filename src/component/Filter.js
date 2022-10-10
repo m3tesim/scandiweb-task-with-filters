@@ -5,35 +5,37 @@ class FiltersList extends Component {
     filters: {},
   };
 
-  render() {
-    const params = new URLSearchParams();
+  params = new URLSearchParams();
+
+  addFilter = (atr, item) => {
     const { filters } = this.state;
 
-    const addFilter = (atr, item) => {
-    
-      let newfilters = { ...filters, [atr]: item };
-      let filterAtributes = Object.keys(newfilters);
-      // adding the filters to the url
-      filterAtributes.map((atr) => params.append(atr, newfilters[atr]));
-      this.setState({
-        filters: newfilters,
-      });
+    let newfilters = { ...filters, [atr]: item };
+    let filterAtributes = Object.keys(newfilters);
+    // adding the filters to the url
+    filterAtributes.map((atr) => this.params.append(atr, newfilters[atr]));
+    this.setState({
+      filters: newfilters,
+    });
 
-      return applyFilter();
-    };
-    const applyFilter = () => {
-      this.props.history.push({
-        pathname: "/",
-        search: params.toString(), // '?name=John&age=32
-      });
-      // console.log(this.props.history,"history");
-    };
+    return this.applyFilter();
+  };
 
+  applyFilter = () => {
+    this.props.history.push({
+      pathname: "/",
+      search: this.params.toString(),
+    });
+  };
+
+ 
+
+  render() {
     let atributes = getAttributes(this.props.products);
     return (
       <div className="filtersContainer">
         <div className="filtersTitle">Filters</div>
-        <Attributes data={atributes} addFilter={addFilter} />
+        <Attributes data={atributes} addFilter={this.addFilter} />
         <div>
           {" "}
           <button className="btn">Reset Filters</button>
@@ -160,13 +162,11 @@ class CheckBox extends Component {
   }
 }
 
-function getAttributes(products) {
+export function getAttributes(products) {
   //filtering attrubutes from all products in category
   let productsAtrributes = products?.map((i) => i.attributes.map((i) => i));
   productsAtrributes = productsAtrributes.reduce((a, b) => a.concat(b), []);
 
-  //productsAtrributes = productsAtrributes?.filter((i) => i !== undefined);
-  // console.log(productsAtrributes, "this is the first step in filtering");
   // grouping  all atributes based on the name of it, ignoring  which products it belongs to
   let allAtr = [];
   for (let i of productsAtrributes) {
@@ -189,8 +189,4 @@ function getAttributes(products) {
   }
 
   return uniqueAtr;
-  // console.log(allAtr, "atr");
-  // console.log(uniqueAtr, "unique");
-
-  // console.log(productsAtrributes, "products  attributess");
 }
