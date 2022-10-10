@@ -12,12 +12,17 @@ class DashBoard extends Component {
 }
 
 
+
+
   render() {
    console.log(this.props.location.search,"url from dashboard");
     const params = new URLSearchParams(this.props.location.search);
     const size = params.get('Size'); // bar
+    const Capacity = params.get('Capacity'); // bar
+
     console.log(params," search params from dash board");
-    console.log( typeof size," size from dash board");
+    console.log(  size," size from dash board");
+    console.log(  Capacity," size from dash board");
 
 
 

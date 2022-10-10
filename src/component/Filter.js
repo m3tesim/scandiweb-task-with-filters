@@ -2,20 +2,26 @@ import React, { Component } from "react";
 import SelectList from "./selectList";
 class FiltersList extends Component {
   state = {
-    filters: [],
+    filters: {},
   };
 
   render() {
     const params = new URLSearchParams();
+    const { filters } = this.state;
 
-    const applyFilter = (atr, items) => {
-      // this.setState({ active: category });
+    const addFilter = (atr, item) => {
+    
+      let newfilters = { ...filters, [atr]: item };
+      let filterAtributes = Object.keys(newfilters);
+      // adding the filters to the url
+      filterAtributes.map((atr) => params.append(atr, newfilters[atr]));
+      this.setState({
+        filters: newfilters,
+      });
 
-      params.append(atr, items);
-
-      //console.log(params.entries,"this is from urlsearch params API")
-      //console.log(this.props.history,"history");
-
+      return applyFilter();
+    };
+    const applyFilter = () => {
       this.props.history.push({
         pathname: "/",
         search: params.toString(), // '?name=John&age=32
@@ -27,7 +33,7 @@ class FiltersList extends Component {
     return (
       <div className="filtersContainer">
         <div className="filtersTitle">Filters</div>
-        <Attributes data={atributes} applyFilter={applyFilter} />
+        <Attributes data={atributes} addFilter={addFilter} />
         <div>
           {" "}
           <button className="btn">Reset Filters</button>
@@ -74,7 +80,7 @@ class Attributes extends Component {
                 key={atr}
                 atr={atr}
                 items={data[atr].items}
-                applyFilter={this.props.applyFilter}
+                addFilter={this.props.addFilter}
               />
             );
 
@@ -84,7 +90,7 @@ class Attributes extends Component {
                 key={atr}
                 atr={atr}
                 items={data[atr].items}
-                applyFilter={this.props.applyFilter}
+                addFilter={this.props.addFilter}
               />
             );
           case "Touch ID in keyboard":

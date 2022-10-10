@@ -4,7 +4,6 @@ class SelectList extends Component {
   state = {
     active: false,
     value: null,
-    // selectedItems: [],
   };
   dropDown() {
     this.setState({ active: !this.state.active });
@@ -16,8 +15,7 @@ class SelectList extends Component {
       "------------AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA-------------------------"
     );
 
-    const { atr, items, applyFilter } = this.props;
-    const { selectedItems } = this.state;
+    const { atr, items ,addFilter} = this.props;
 
     const toggleSelection = (e) => {
       console.log(e.target.value, "have been clicked");
@@ -26,8 +24,8 @@ class SelectList extends Component {
         value: item,
         active: !this.state.active
       });
-
-      applyFilter(atr, item);
+       addFilter(atr,item)
+      //applyFilter();
 
       /*  if (selectedItems.indexOf(item) === -1) {
         applyFilter(atr, [...selectedItems, item]);
@@ -46,7 +44,6 @@ class SelectList extends Component {
 */
     };
 
-    console.log(selectedItems, "selected items ");
 
     console.log(
       "---------------------------bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb-------------"
