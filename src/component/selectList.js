@@ -3,7 +3,8 @@ import React, { Component } from "react";
 class SelectList extends Component {
   state = {
     active: false,
-    selectedItems: [],
+    value: null,
+    // selectedItems: [],
   };
   dropDown() {
     this.setState({ active: !this.state.active });
@@ -21,8 +22,14 @@ class SelectList extends Component {
     const toggleSelection = (e) => {
       console.log(e.target.value, "have been clicked");
       const item = e.target.value;
-      
-      if (selectedItems.indexOf(item) === -1) {
+      this.setState({
+        value: item,
+        active: !this.state.active
+      });
+
+      applyFilter(atr, item);
+
+      /*  if (selectedItems.indexOf(item) === -1) {
         applyFilter(atr, [...selectedItems, item]);
 
         this.setState({
@@ -36,9 +43,7 @@ class SelectList extends Component {
           selectedItems: arr,
         });
       }
-
-
-
+*/
     };
 
     console.log(selectedItems, "selected items ");
@@ -49,18 +54,22 @@ class SelectList extends Component {
 
     return (
       <div className="filterAtributes">
-        <div onClick={() => this.dropDown()}>{atr}⌄</div>
+        <div onClick={() => this.dropDown()}> {atr} <span className="colorGrean" >{this.state.value}</span>⌄</div>
+
         <div
           className={`selectListDropdown  ${
             this.state.active && "activeList"
           }`}>
+            
           <div className="selectList">
             {items.map((i) => (
-              <Button
-                key={i}
-                item={i}
-                toggleSelection={(e) => toggleSelection(e)}
-              />
+              <button
+              // className={`${this.state.active && "activeListItem"}`}
+               key={i}
+               onClick={(e) => toggleSelection(e)}
+               value={i}>
+               {i}
+             </button>
             ))}
           </div>
         </div>
@@ -70,22 +79,17 @@ class SelectList extends Component {
 }
 
 class Button extends Component {
-  state = { active: false };
   clicked = (e) => {
-    this.setState({
-      active: !this.state.active,
-    });
     this.props.toggleSelection(e);
   };
 
   render() {
-    console.log(this.state.active);
 
     const { item } = this.props;
 
     return (
       <button
-        className={`${this.state.active && "activeListItem"}`}
+       // className={`${this.state.active && "activeListItem"}`}
         key={item}
         onClick={(e) => this.clicked(e)}
         value={item}>

@@ -762,6 +762,9 @@ input[type="radio"]:checked +  #color-input  {
 .filtersContainer button{
   float: right;
 }
+.colorGrean{
+  color: #24ab48;
+}
 
 
 ::-webkit-scrollbar {
