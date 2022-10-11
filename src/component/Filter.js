@@ -1,30 +1,31 @@
 import React, { Component } from "react";
 import SelectList from "./selectList";
-class FiltersList extends Component {
+class Filters extends Component {
   state = {
     filters: {},
   };
 
-  params = new URLSearchParams();
 
   addFilter = (atr, item) => {
-    const { filters } = this.state;
+    let params = new URLSearchParams();
 
-    let newfilters = { ...filters, [atr]: item };
+    const { filters } = this.state;
+    let newfilters =  Object.assign({}, filters, {[atr]: item })
+    console.log(newfilters,"filters before append");
     let filterAtributes = Object.keys(newfilters);
     // adding the filters to the url
-    filterAtributes.map((atr) => this.params.append(atr, newfilters[atr]));
+    filterAtributes.map((atr) => params.append(atr, newfilters[atr]));
     this.setState({
       filters: newfilters,
     });
 
-    return this.applyFilter();
+    return this.applyFilter(params);
   };
 
-  applyFilter = () => {
+  applyFilter = (params) => {
     this.props.history.push({
       pathname: "/",
-      search: this.params.toString(),
+      search: params.toString(),
     });
   };
 
@@ -45,7 +46,7 @@ class FiltersList extends Component {
   }
 }
 
-export default FiltersList;
+export default Filters;
 
 class Attributes extends Component {
   state = {

@@ -11,8 +11,7 @@ class DashBoard extends Component {
   }
 
   filterProducts(products, filter) {
-    const filteredProducts = [];
-    console.log(products, "from filter function ");
+    let filteredProducts = [];
     for (let product of products) {
       let attributes = product.attributes?.filter(
         (atr) => atr?.name === filter
@@ -20,21 +19,26 @@ class DashBoard extends Component {
       if (attributes.length > 0) filteredProducts.push(product);
     }
 
-    return filteredProducts;
+       return filteredProducts;
   }
 
   render() {
     const { category, loading } = this.props;
 
     const params = new URLSearchParams(this.props.location.search);
-    const size = params.get("Size"); // bar
-    const capacity = params.get("Capacity"); // bar'
-    let filteredProducts;
+    //const size = params.get("Size"); // bar
+   // const capacity = params.get("Capacity"); // bar'
+    let filteredProducts=[];
     if (this.props.products !== null) {
-      filteredProducts = this.filterProducts(this.props.products, "Size");
+      params.forEach((value,key)=>{
+        let filter=this.filterProducts(this.props.products,key)
+        console.log(filter,key+" key ?","inside loop of gettin filter from rl");
+        filteredProducts=  filteredProducts.concat(filter)
+      })
+    //  filteredProducts = this.filterProducts(this.props.products, size);
     }
-
-    const products = filteredProducts || this.props.products;
+console.log( filteredProducts,"Filtered products ");
+let products = (filteredProducts.length>0? filteredProducts : this.props.products)
 
     //let atrs=getAttributes(products)
 
@@ -45,8 +49,8 @@ class DashBoard extends Component {
     console.log(this.props.location.search, "url from dashboard");
 
     console.log(params, " search params from dash board");
-    console.log(size, " size from dash board");
-    console.log(capacity, " size from dash board");
+  //  console.log(size, " size from dash board");
+   // console.log(capacity, " size from dash board");
 
     return (
       <div>
