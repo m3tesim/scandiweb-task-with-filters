@@ -8,22 +8,19 @@ class Filters extends Component {
     filters: {},
     reset: false,
   };
-  reset=(value)=> {
-
+  reset = (value) => {
     console.log("this.state after reset from selects is on ");
 
     this.setState({ reset: value });
-  }
+  };
 
-   params = new URLSearchParams();
-
+  params = new URLSearchParams();
 
   addFilter = (atr, item, remove) => {
-   const params = new URLSearchParams();
+    const params = new URLSearchParams();
 
     const { filters } = this.state;
     let newfilters;
-
 
     if (remove) {
       delete filters[atr];
@@ -32,11 +29,11 @@ class Filters extends Component {
     this.setState({
       filters: newfilters,
     });
-   // console.log(newfilters, "filters before append");
+    // console.log(newfilters, "filters before append");
     let filterAtributes = Object.keys(newfilters);
     // adding the filters to the url
     filterAtributes.map((atr) => params.append(atr, newfilters[atr]));
-   
+
     return this.applyFilter(params);
   };
 
@@ -54,30 +51,33 @@ class Filters extends Component {
     filterAtributes.map((atr) => this.params.delete(atr));
     this.setState({
       filters: [],
-      reset: value 
+      reset: value,
     });
     console.log("clicked");
     this.props.history.push({
       pathname: "/",
       search: null,
     });
-    this.reset(value)
+    this.reset(value);
   };
 
-  
   render() {
     let atributes = getAttributes(this.props.products);
     return (
       <div className="filtersContainer">
         <div className="filtersTitle">Filters</div>
         <FilterContext.Provider
-        value={{"reset":this.reset,"active":this.state.reset}}
-        >
-        <Attributes reset={this.state.reset} data={atributes} addFilter={this.addFilter}  resetFunction={this.reset}/>
+          value={{ reset: this.reset, active: this.state.reset }}>
+          <Attributes
+            reset={this.state.reset}
+            data={atributes}
+            addFilter={this.addFilter}
+            resetFunction={this.reset}
+          />
         </FilterContext.Provider>
         <div>
           {" "}
-          <button className="btn" onClick={() => (this.resetFilters(true))}>
+          <button className="btn" onClick={() => this.resetFilters(true)}>
             Reset Filters
           </button>
         </div>
@@ -97,7 +97,6 @@ class Attributes extends Component {
     this.setState({ sizeListActive: !this.state.sizeListActive });
   }
   dropDown(listName) {
-
     this.setState({ [listName]: !this.state[listName] });
   }
 
@@ -114,14 +113,21 @@ class Attributes extends Component {
       attributes = filterData.map((atr) => {
         switch (atr) {
           case "Color":
-            return <RadioButton key={atr} atr={atr} items={data[atr].items} />;
+            return (
+              <RadioButton
+                key={atr}
+                atr={atr}
+                items={data[atr].items}
+                reset={this.props.reset}
+                addFilter={this.props.addFilter}
+                resetFunction={this.props.resetFunction}
+              />
+            );
           case "Size":
             return (
-
               <SelectList
-              reset={this.props.reset}
+                reset={this.props.reset}
                 resetFunction={this.props.resetFunction}
-
                 key={atr}
                 atr={atr}
                 items={data[atr].items}
@@ -132,9 +138,8 @@ class Attributes extends Component {
           case "Capacity":
             return (
               <SelectList
-              reset={this.props.reset}
-              resetFunction={this.props.resetFunction}
-
+                reset={this.props.reset}
+                resetFunction={this.props.resetFunction}
                 key={atr}
                 atr={atr}
                 items={data[atr].items}
@@ -177,9 +182,15 @@ class Attributes extends Component {
 }
 
 class RadioButton extends Component {
-  render() {
-    const { atr, items } = this.props;
 
+  render() {
+    const { atr, items, resetFunction, addFilter } = this.props;
+    const toggleSelection = (e) => {
+      console.log(e.target.value, "have been clicked");
+      const item = e.target.value;
+      resetFunction(false);
+      addFilter(atr, item);
+    };
     return (
       <div key={atr}>
         <div className="filterAtributes" style={{ gap: ".1rem" }}>
@@ -187,7 +198,13 @@ class RadioButton extends Component {
           <br />
           {items.map((i) => (
             <div key={i}>
-              <input type="radio" id={i} name={atr} value={i} />
+              <input
+                type="radio"
+                id={i}
+                name={atr}
+                value={i}
+                onClick={(e) => toggleSelection(e)}
+              />
               <label
                 id="color-input"
                 style={{ backgroundColor: i }}
@@ -217,11 +234,11 @@ class CheckBox extends Component {
           <div>{atr}</div>
 
           <div className="checkBoxContainer">
-            {items.map((i,index) => (
-              <div key={i+atr}>
+            {items.map((i, index) => (
+              <div key={i + atr}>
                 <input
                   type="checkbox"
-                  id={i+atr}
+                  id={i + atr}
                   name={i}
                   value={i}
                   onClick={(e) => toggleSelection(e)}
