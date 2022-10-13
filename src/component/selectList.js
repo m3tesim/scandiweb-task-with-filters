@@ -1,25 +1,33 @@
 import React, { Component } from "react";
-
+import { FilterContext } from "./filter";
 class SelectList extends Component {
   state = {
     active: false,
     value: null,
   };
+  componentDidUpdate(prevProps,prevState){
+    // this checks for the reset value that passed from filter parent and based on it 
+    //set the value of the select list to null or do nothing
+    if (prevProps.reset !== this.props.reset&& this.props.reset===true) {
+      this.setState({
+        value: null,
+      });    }
+  }
+
   dropDown() {
     this.setState({ active: !this.state.active });
     console.log("clicked on  list");
   }
 
   render() {
-    console.log(
-      "------------AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA-------------------------"
-    );
 
-    const { atr, items ,addFilter} = this.props;
+    const { atr, items ,addFilter,resetFunction} = this.props;
+    const ChoosenValue= this.state.value
 
     const toggleSelection = (e) => {
       console.log(e.target.value, "have been clicked");
       const item = e.target.value;
+      resetFunction(false)
       this.setState({
         value: item,
         active: !this.state.active
@@ -45,12 +53,12 @@ class SelectList extends Component {
     };
 
 
-    console.log(
-      "---------------------------bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb-------------"
-    );
+
 
     return (
+    
       <div className="filterAtributes">
+
         <div onClick={() => this.dropDown()}> {atr} <span className="colorGrean" >{this.state.value}</span>⌄</div>
 
         <div
@@ -63,7 +71,10 @@ class SelectList extends Component {
               <button
               // className={`${this.state.active && "activeListItem"}`}
                key={i}
-               onClick={(e) => toggleSelection(e)}
+               onClick={(e) => {
+                toggleSelection(e)
+             
+              }}
                value={i}>
                {i}
              </button>
@@ -71,29 +82,10 @@ class SelectList extends Component {
           </div>
         </div>
       </div>
+  
     );
   }
 }
 
-class Button extends Component {
-  clicked = (e) => {
-    this.props.toggleSelection(e);
-  };
-
-  render() {
-
-    const { item } = this.props;
-
-    return (
-      <button
-       // className={`${this.state.active && "activeListItem"}`}
-        key={item}
-        onClick={(e) => this.clicked(e)}
-        value={item}>
-        {item}
-      </button>
-    );
-  }
-}
 
 export default SelectList;

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import ProductThumbnail from "./productThumbnail";
 import { handleProducts } from "../actions/shared";
-import { getAttributes } from "./filter";
 class DashBoard extends Component {
   componentDidMount() {
     if (this.props.loading) {
@@ -32,25 +31,21 @@ class DashBoard extends Component {
     if (this.props.products !== null) {
       params.forEach((value,key)=>{
         let filter=this.filterProducts(this.props.products,key)
-        console.log(filter,key+" key ?","inside loop of gettin filter from rl");
+       // console.log(filter,key+" key ?","inside loop of gettin filter from rl");
+
         filteredProducts=  filteredProducts.concat(filter)
       })
+      filteredProducts = [...new Set(filteredProducts)];
+
     //  filteredProducts = this.filterProducts(this.props.products, size);
     }
-console.log( filteredProducts,"Filtered products ");
+//console.log( filteredProducts,"Filtered products ");
 let products = (filteredProducts.length>0? filteredProducts : this.props.products)
 
-    //let atrs=getAttributes(products)
+  
+ //   console.log(this.props.location.search, "url from dashboard");
 
-    //   console.log("this category dashboard page "+category)
-    //const filteredProducts=this.filterProdcts(this.props.products, "Size")
-
-    // console.log( filteredProducts, " 222 from filtr rsult fnction ");
-    console.log(this.props.location.search, "url from dashboard");
-
-    console.log(params, " search params from dash board");
-  //  console.log(size, " size from dash board");
-   // console.log(capacity, " size from dash board");
+   // console.log(params, " search params from dash board");
 
     return (
       <div>

@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import shoppingbag from "../assets/baglogo.svg";
 import cartIcon from "../assets/cart.svg";
 import filtersIcon from "../assets/filters.svg";
-
 import { getproductByCategory } from "../actions/productsAction";
 import getCurrency from "../actions/currencyAction";
 import { Link, NavLink } from "react-router-dom";
@@ -141,7 +140,8 @@ class Nav extends Component {
               className={`filtersList   ${
                 this.state.filtersDropDown && `active`
               }`}>
-              {products && <Filter history={this.props.history} products={products} dispatch={dispatch} />}
+                {products && <Filter history={this.props.history} products={products} dispatch={dispatch} />}
+
             </div>
 
             <div className="navIcon logo ">
