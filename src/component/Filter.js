@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import SelectList from "./selectList";
-
+import { RadioButton } from "./radioButton";
 export const FilterContext = React.createContext();
 
 class Filters extends Component {
@@ -149,6 +149,8 @@ class Attributes extends Component {
           case "Touch ID in keyboard":
             return (
               <CheckBox
+              reset={this.props.reset}
+              resetFunction={this.props.resetFunction}
                 key={atr}
                 atr={atr}
                 items={data[atr].items}
@@ -159,6 +161,8 @@ class Attributes extends Component {
           case "With USB 3 ports":
             return (
               <CheckBox
+              reset={this.props.reset}
+              resetFunction={this.props.resetFunction}
                 key={atr}
                 atr={atr}
                 items={data[atr].items}
@@ -181,44 +185,20 @@ class Attributes extends Component {
   }
 }
 
-class RadioButton extends Component {
-
-  render() {
-    const { atr, items, resetFunction, addFilter } = this.props;
-    const toggleSelection = (e) => {
-      console.log(e.target.value, "have been clicked");
-      const item = e.target.value;
-      resetFunction(false);
-      addFilter(atr, item);
-    };
-    return (
-      <div key={atr}>
-        <div className="filterAtributes" style={{ gap: ".1rem" }}>
-          <div>{atr}</div>
-          <br />
-          {items.map((i) => (
-            <div key={i}>
-              <input
-                type="radio"
-                id={i}
-                name={atr}
-                value={i}
-                onClick={(e) => toggleSelection(e)}
-              />
-              <label
-                id="color-input"
-                style={{ backgroundColor: i }}
-                htmlFor={i}></label>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
-}
 
 class CheckBox extends Component {
+
+  checkedRef = React.createRef();
+    componentDidUpdate(prevProps,prevState){
+        // this checks for the reset value that passed from filter parent and based on it 
+        if (prevProps.reset !== this.props.reset&& this.props.reset===true) {
+          this.checkedRef.current.map((element) => (element.checked = false));
+        }
+      }
+
   render() {
+    this.checkedRef.current=[]
+
     const { atr, items, addFilter } = this.props;
 
     const toggleSelection = (e) => {
@@ -237,6 +217,9 @@ class CheckBox extends Component {
             {items.map((i, index) => (
               <div key={i + atr}>
                 <input
+                  ref={(element) => {
+                    this.checkedRef.current[index] = element;
+                     }}
                   type="checkbox"
                   id={i + atr}
                   name={i}
