@@ -1,8 +1,15 @@
 import React, { Component } from "react";
 import SelectList from "./selectList";
 import { RadioButton } from "./radioButton";
-export const FilterContext = React.createContext();
+import CheckBox from "./checkBox";
+import {getAttributes} from '../assets/utilities'
 
+
+
+
+
+
+export const FilterContext = React.createContext();
 class Filters extends Component {
   state = {
     filters: {},
@@ -77,7 +84,7 @@ class Filters extends Component {
         </FilterContext.Provider>
         <div>
           {" "}
-          <button className="btn" onClick={() => this.resetFilters(true)}>
+          <button className=" viewBag" onClick={() => this.resetFilters(true)}>
             Reset Filters
           </button>
         </div>
@@ -186,81 +193,6 @@ class Attributes extends Component {
 }
 
 
-class CheckBox extends Component {
 
-  checkedRef = React.createRef();
-    componentDidUpdate(prevProps,prevState){
-        // this checks for the reset value that passed from filter parent and based on it 
-        if (prevProps.reset !== this.props.reset&& this.props.reset===true) {
-          this.checkedRef.current.map((element) => (element.checked = false));
-        }
-      }
 
-  render() {
-    this.checkedRef.current=[]
 
-    const { atr, items, addFilter } = this.props;
-
-    const toggleSelection = (e) => {
-      let checked = e.target.checked;
-      const item = e.target.value;
-      checked ? addFilter(atr, item) : addFilter(atr, item, true);
-
-      //applyFilter();
-    };
-    return (
-      <div key={atr}>
-        <div className="filterAtributes ">
-          <div>{atr}</div>
-
-          <div className="checkBoxContainer">
-            {items.map((i, index) => (
-              <div key={i + atr}>
-                <input
-                  ref={(element) => {
-                    this.checkedRef.current[index] = element;
-                     }}
-                  type="checkbox"
-                  id={i + atr}
-                  name={i}
-                  value={i}
-                  onClick={(e) => toggleSelection(e)}
-                />
-                <label htmlFor={i}> {i}</label>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
-
-export function getAttributes(products) {
-  //filtering attrubutes from all products in category
-  let productsAtrributes = products?.map((i) => i.attributes.map((i) => i));
-  productsAtrributes = productsAtrributes.reduce((a, b) => a.concat(b), []);
-
-  // grouping  all atributes based on the name of it, ignoring  which products it belongs to
-  let allAtr = [];
-  for (let i of productsAtrributes) {
-    let atr = i?.items;
-    let id = i?.id;
-    allAtr = allAtr.concat({ name: id, atr: atr });
-  }
-  // removes dublicates attribtes that comes from different products
-  let uniqueAtr = {};
-  for (let i of allAtr) {
-    let thisName = i.name;
-    let thisAtr = i.atr.map((i) => i.value);
-
-    if (!uniqueAtr[thisName]) {
-      uniqueAtr[thisName] = { name: thisName, items: thisAtr };
-    }
-
-    // filtering dublicated arttibutes
-    //   else{ uniqueAtr[thisName]=   [...new Set(uniqueAtr[thisName].items.concat(thisAtr)) ] }
-  }
-
-  return uniqueAtr;
-}

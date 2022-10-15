@@ -2,6 +2,11 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import ProductThumbnail from "./productThumbnail";
 import { handleProducts } from "../actions/shared";
+import{filterProducts} from '../assets/utilities'
+
+
+
+
 class DashBoard extends Component {
   componentDidMount() {
     if (this.props.loading) {
@@ -9,43 +14,18 @@ class DashBoard extends Component {
     } else return;
   }
 
-  filterProducts(products, filter) {
-    let filteredProducts = [];
-    for (let product of products) {
-      let attributes = product.attributes?.filter(
-        (atr) => atr?.name === filter
-      );
-      if (attributes.length > 0) filteredProducts.push(product);
-    }
-
-       return filteredProducts;
-  }
-
   render() {
-    const { category, loading } = this.props;
-
+    const { category, loading, products } = this.props;
+    let filteredProducts = [];
     const params = new URLSearchParams(this.props.location.search);
-    //const size = params.get("Size"); // bar
-   // const capacity = params.get("Capacity"); // bar'
-    let filteredProducts=[];
-    if (this.props.products !== null) {
-      params.forEach((value,key)=>{
-        let filter=this.filterProducts(this.props.products,key)
-       // console.log(filter,key+" key ?","inside loop of gettin filter from rl");
+ console.log(params,"this params is search history");
 
-        filteredProducts=  filteredProducts.concat(filter)
-      })
-      filteredProducts = [...new Set(filteredProducts)];
-
-    //  filteredProducts = this.filterProducts(this.props.products, size);
+    
+    if (products !== null) {
+      filteredProducts = filterProducts(products, params);
     }
-//console.log( filteredProducts,"Filtered products ");
-let products = (filteredProducts.length>0? filteredProducts : this.props.products)
-
-  
- //   console.log(this.props.location.search, "url from dashboard");
-
-   // console.log(params, " search params from dash board");
+    console.log(filteredProducts,params.toString().length , "filteredProducts FTER ALL");
+    let newproducts =params.toString().length === 0 ?   products:filteredProducts;
 
     return (
       <div>
@@ -56,7 +36,7 @@ let products = (filteredProducts.length>0? filteredProducts : this.props.product
             </div>
 
             <div className="container">
-              {products.map((p) => (
+              {newproducts.map((p) => (
                 <div key={p.id}>
                   <ProductThumbnail id={p.id} />{" "}
                 </div>

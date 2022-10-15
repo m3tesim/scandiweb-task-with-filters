@@ -11,7 +11,7 @@ class SelectList extends Component {
     if (prevProps.reset !== this.props.reset&& this.props.reset===true) {
       this.setState({
         value: null,
-      });    }
+      })}
   }
 
   dropDown() {
@@ -22,7 +22,6 @@ class SelectList extends Component {
   render() {
 
     const { atr, items ,addFilter,resetFunction} = this.props;
-    const ChoosenValue= this.state.value
 
     const toggleSelection = (e) => {
       console.log(e.target.value, "have been clicked");

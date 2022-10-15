@@ -17,13 +17,13 @@ export class RadioButton extends Component {
 
       const { atr, items, reset,resetFunction, addFilter } = this.props;
       const toggleSelection = (e) => {
-        console.log(e.target.value, "have been clicked");
+       // console.log(e.target.value, "have been clicked");
         const item = e.target.value;
         resetFunction(false);
         addFilter(atr, item);
       };
 
-      console.log(this.checkedRef,"Refer ftom radio button");
+     // console.log(this.checkedRef,"Refer ftom radio button");
       return (
         <div key={atr}>
           <div className="filterAtributes" style={{ gap: ".1rem" }}>
