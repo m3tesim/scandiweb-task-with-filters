@@ -15,6 +15,15 @@ class Filters extends Component {
     filters: {},
     reset: false,
   };
+
+
+  componentDidUpdate(prevProps,prevState){
+    // this checks for the reset value that passed from filter parent and based on it 
+    //set the value of the select list to null or do nothing
+    if (prevProps.products !== this.props.products) {
+      this.resetFilters(true)
+  }}
+
   reset = (value) => {
     console.log("this.state after reset from selects is on ");
 
@@ -57,16 +66,17 @@ class Filters extends Component {
 
     filterAtributes.map((atr) => this.params.delete(atr));
     this.setState({
-      filters: [],
+      filters: {},
       reset: value,
     });
-    console.log("clicked");
     this.props.history.push({
       pathname: "/",
       search: null,
     });
     this.reset(value);
   };
+
+ 
 
   render() {
     let atributes = getAttributes(this.props.products);
