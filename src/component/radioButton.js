@@ -15,7 +15,7 @@ export class RadioButton extends Component {
     render() {
       this.checkedRef.current=[]
 
-      const { atr, items, reset,resetFunction, addFilter } = this.props;
+      const { atr, items,resetFunction, addFilter } = this.props;
       const toggleSelection = (e) => {
        // console.log(e.target.value, "have been clicked");
         const item = e.target.value;

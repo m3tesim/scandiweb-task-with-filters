@@ -29,7 +29,6 @@ export function getAttributes(products) {
 
 export function filterProducts(products, params) {
   let filteredProducts = [];
-   let NoPoductFound=false
   for (let product of products) {
     let productAtr = getAttribute(product);
     let showProduct=true ;

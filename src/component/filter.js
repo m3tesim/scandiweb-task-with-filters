@@ -9,7 +9,6 @@ import {getAttributes} from '../assets/utilities'
 
 
 
-export const FilterContext = React.createContext();
 class Filters extends Component {
   state = {
     filters: {},
@@ -83,15 +82,13 @@ class Filters extends Component {
     return (
       <div className="filtersContainer">
         <div className="filtersTitle">Filters</div>
-        <FilterContext.Provider
-          value={{ reset: this.reset, active: this.state.reset }}>
+      
           <Attributes
             reset={this.state.reset}
             data={atributes}
             addFilter={this.addFilter}
             resetFunction={this.reset}
           />
-        </FilterContext.Provider>
         <div>
           {" "}
           <button className=" viewBag" onClick={() => this.resetFilters(true)}>
